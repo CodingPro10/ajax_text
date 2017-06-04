@@ -53,7 +53,26 @@ try {
       }
     } break;
     case 'PUT': {
-      //to be implemented
+      if(isset($_GET['id'])){
+
+        $result = $conn->query("SELECT * FROM books WHERE book_id=".$_GET['id']." LIMIT 1");
+        $var = $result->fetch();
+
+        $id = $_GET['id'];
+        $name = $_GET['name'] ?? $var['book_name'];
+        $author = $_GET['author'] ?? $var['book_author'];
+        $description = $_GET['description'] ?? $var['book_description'];
+        $status = $_GET['status'] ?? $var['book_status'];
+
+        $sql = "UPDATE books SET book_author=:author, book_name=:name, book_description=:desc, book_status=:status where book_id=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id' => $id, 'author' => $author, 'name' => $name, 'desc' => $description, 'status' => $status]);
+
+        $result = $conn->query("SELECT * FROM books WHERE book_id=".$_GET['id']." LIMIT 1");
+        echo json_encode($result->fetch());
+      } else {
+        throw new Exception("Brak wszystkich pól");
+      }
     } break;
     case 'DELETE': {
       //to be implemented
