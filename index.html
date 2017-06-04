@@ -6,5 +6,26 @@
 </head>
 <body>
     <h1>test</h1>
+    <table id='myTable' border=1>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+        </tr>
+    </table>
+    <button type="button">Change Content</button>
 </body>
 </html>
+<script>
+    $("button").click(function(){
+        $.ajax({
+            url: "api.php",
+            data: {},
+            type: "GET",
+            dataType : "json",
+            success: function( json ) { alert('GET completed'); },
+            error: function( xhr, status, errorThrown ) { alert('GET failed');},
+            complete: function( xhr, status ) {}
+        });
+    });
+</script>
