@@ -26,7 +26,12 @@
             success: function( json ) { 
                     // alert('GET completed'); 
                     // $("#myTable").html(json);
-                    $('#myTable').append("<tr><td>"+json[0]+"</td><td>"+json[1]+"</td><td>"+json[2]+"</td></tr>");
+                    $('#myTable').append(
+                        "<tr>" +
+                            "<td><a href=\"api.php?id="+json[0]+"\">id " + json[0] + "</a></td>"+
+                            "<td><a href=\"api.php?id="+json[1]+"\">id " + json[1] + "</a></td>"+
+                            "<td><a href=\"api.php?id="+json[2]+"\">id " + json[2] + "</a></td>"+
+                        "</tr>");
                 },
             error: function( xhr, status, errorThrown ) { alert('GET failed');},
             complete: function( xhr, status ) {}
