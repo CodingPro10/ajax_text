@@ -6,14 +6,14 @@
 </head>
 <body>
     <h1>test</h1>
-    <table id='myTable' border=1>
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-        </tr>
-    </table>
     <button type="button">Change Content</button>
+    <table id='myTable' border=1>
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+    </table>
 </body>
 </html>
 <script>
@@ -23,7 +23,11 @@
             data: {},
             type: "GET",
             dataType : "json",
-            success: function( json ) { alert('GET completed'); },
+            success: function( json ) { 
+                    // alert('GET completed'); 
+                    // $("#myTable").html(json);
+                    $('#myTable').append("<tr><td>"+json[0]+"</td><td>"+json[1]+"</td><td>"+json[2]+"</td></tr>");
+                },
             error: function( xhr, status, errorThrown ) { alert('GET failed');},
             complete: function( xhr, status ) {}
         });
