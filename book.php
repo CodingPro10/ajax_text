@@ -26,6 +26,40 @@ try {
     );"
   );
 
+  switch($_SERVER['REQUEST_METHOD']){
+    case 'GET': {
+      if(isset($_GET['id'])){
+        $result = $conn->query("SELECT * FROM books WHERE book_id=".$_GET['id']." LIMIT 1");
+        echo json_encode($result->fetch());
+      } else {
+        $result = $conn->query("SELECT * FROM books");
+        echo json_encode($result->fetchAll());
+      }
+    } break;
+    case 'POST': {
+      $name = $_POST['name'] ?? false;
+      $author = $_POST['author'] ?? false;
+      $description = $_POST['description'] ?? false;
+
+      if($name && $author && $description){
+        $sql = "INSERT INTO books(book_author, book_name, book_description, book_status) VALUES(:author, :name, :desc, :status)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['author' => $author, 'name' => $name, 'desc' => $description, 'status' => 0]);
+
+        $result = $conn->query("SELECT * FROM books WHERE book_id=".$conn->lastInsertId()." LIMIT 1");
+        echo json_encode($result->fetch());
+      } else {
+        throw new Exception("Brak wszystkich pól");
+      }
+    } break;
+    case 'PUT': {
+      //to be implemented
+    } break;
+    case 'DELETE': {
+      //to be implemented
+    } break;
+  }
+
 //   $sql = "INSERT INTO users(user_name, user_email) VALUES(:name, :email)";
 //   $stmt = $conn->prepare($sql);
 //   $stmt->execute(['name' => 'name', 'email' => 'name@name']);
